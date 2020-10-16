@@ -1,0 +1,26 @@
+﻿<Window x:Class="WpfAnimated.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAnimated.Demo"
+        xmlns:an="clr-namespace:WpfAnimated;assembly=WpfAnimated"
+        an:ImageBehavior.AnimateInDesignMode="True"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="800" Background="Red">
+    <WrapPanel Margin="10" Orientation="Horizontal">
+        <Button Background="Transparent" Height="414" Width="633">
+            <Image an:ImageBehavior.AnimatedSource="res/1.png"></Image>
+        </Button>
+        <Button Background="Transparent" Height="414" Width="633">
+            <Image an:ImageBehavior.AnimatedSource="res/2.png"></Image>
+        </Button>
+        <Button Background="Transparent" Height="414" Width="633">
+            <Image an:ImageBehavior.AnimatedSource="res/3.png"></Image>
+        </Button>
+        <Button Background="Transparent" Height="414" Width="633">
+            <Image an:ImageBehavior.AnimatedSource="res/4.png"></Image>
+        </Button>
+        
+    </WrapPanel>
+</Window>
