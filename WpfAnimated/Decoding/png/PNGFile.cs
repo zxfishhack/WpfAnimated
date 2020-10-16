@@ -98,7 +98,6 @@ namespace WpfAnimated.Decoding.Png
                 var stride = Align(apng.IHDRChunk.Width, 8) * 4;
                 var bgdPxl = new byte[apng.IHDRChunk.Height * stride];
                 var framePxl = new byte[apng.IHDRChunk.Height * stride];
-                var inited = false;
                 for (var i = 0; i < apng.Frames.Length; i++)
                 {
                     var pngFrame = apng.Frames[i];
