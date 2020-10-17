@@ -335,6 +335,39 @@ namespace WpfAnimated
             element.RemoveHandler(AnimationCompletedEvent, handler);
         }
 
+        /// <summary>
+        /// Gets the value of the <c>AnimationDuration</c> attached property for the specified object.
+        /// </summary>
+        /// <param name="obj">The element from which to read the property value.</param>
+        /// <returns>The duration for the animated image.</returns>
+        public static Duration? GetAnimationStaticDuration(DependencyObject obj)
+        {
+            return (Duration?)obj.GetValue(AnimationStaticDurationProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the <c>AnimationDuration</c> attached property for the specified object.
+        /// </summary>
+        /// <param name="obj">The element on which to set the property value.</param>
+        /// <param name="value">The duration of the animated image.</param>
+        /// <remarks>The <c>AnimationSpeedRatio</c> and <c>AnimationDuration</c> properties are mutually exclusive, only one can be set at a time.</remarks>
+        public static void SetAnimationStaticDuration(DependencyObject obj, Duration? value)
+        {
+            obj.SetValue(AnimationStaticDurationProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the <c>AnimationDuration</c> attached property.
+        /// </summary>
+        public static readonly DependencyProperty AnimationStaticDurationProperty =
+            DependencyProperty.RegisterAttached(
+                "AnimationStaticDuration",
+                typeof(Duration?),
+                typeof(ImageBehavior),
+                new PropertyMetadata(
+                    null,
+                    AnimationStaticPropertyChanged));
+
         #endregion
 
         private static void AnimatedSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -410,6 +443,20 @@ namespace WpfAnimated
             var controller = GetAnimationController(imageControl);
             if (controller != null)
                 controller.Dispose();
+        }
+
+        private static void AnimationStaticPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            Image imageControl = o as Image;
+            if (imageControl == null)
+                return;
+
+            ImageSource source = GetAnimatedSource(imageControl);
+            if (source != null)
+            {
+                if (imageControl.IsLoaded)
+                    InitAnimationOrImage(imageControl);
+            }
         }
 
         private static void AnimationPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -576,6 +623,12 @@ namespace WpfAnimated
                             totalDuration = TimeSpan.FromMilliseconds((int)totalDurationFromFile);
                         }
                         gifMetadata.BitmapFrames = null;
+                    }
+
+                    var animationStaticDuration = GetAnimationStaticDuration(imageControl);
+                    if (animationStaticDuration.HasValue && animationStaticDuration.Value.HasTimeSpan && animationStaticDuration.Value.TimeSpan.Ticks > 0)
+                    {
+                        totalDuration += animationStaticDuration.Value.TimeSpan;
                     }
 
                     cacheEntry = new AnimationCacheEntry(keyFrames, totalDuration, repeatCount);

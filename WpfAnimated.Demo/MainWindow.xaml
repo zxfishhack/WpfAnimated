@@ -13,7 +13,7 @@
             <Image an:ImageBehavior.AnimatedSource="res/1.png"></Image>
         </Button>
         <Button Background="Transparent" Height="414" Width="633">
-            <Image an:ImageBehavior.AnimatedSource="res/2.png"></Image>
+            <Image an:ImageBehavior.AnimatedSource="res/2.png" an:ImageBehavior.AnimationStaticDuration="00:00:01"></Image>
         </Button>
         <Button Background="Transparent" Height="414" Width="633">
             <Image an:ImageBehavior.AnimatedSource="res/3.png"></Image>
